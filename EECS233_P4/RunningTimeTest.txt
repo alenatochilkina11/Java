@@ -1,0 +1,4 @@
+Array Size: 250000 -- Running Time: 41236133
+Array Size: 500000 -- Running Time: 66580454
+Array Size: 1000000 -- Running Time: 181497155
+Array Size: 1250000 -- Running Time: 192542666

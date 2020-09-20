@@ -1,0 +1,56 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+module lab6 ();\
+\
+    function logic [7:0] decoder3to8 (logic en_b, logic [2:0] in);\
+        casex(\{en_b, in\})\
+		4'b1xxx: return 8'b1111_1111;\
+		4'b0000: return 8'b1111_1110;\
+		4'b0001: return 8'b1111_1101;\
+		4'b0010: return 8'b1111_1011;\
+		4'b0011: return 8'b1111_0111;\
+		4'b0100: return 8'b1110_1111;\
+		4'b0101: return 8'b1101_1111;\
+		4'b0110: return 8'b1011_1111;\
+		4'b0111: return 8'b0111_1111;\
+        endcase\
+    endfunction\
+\
+    function logic [2:0] encoder8to3 (logic en_b, logic [7:0] in_b);\
+        casex(\{en_b, in_b\})\
+		9'b1_xxxxxxxx: return 3'b111;\
+		9'b0_0xxxxxxx: return 3'b000;\
+		9'b0_10xxxxxx: return 3'b001;\
+		9'b0_100xxxxx: return 3'b010;\
+		9'b0_1000xxxx: return 3'b011;\
+		9'b0_10000xxx: return 3'b100;\
+		9'b0_100000xx: return 3'b101;\
+		9'b0_1000000x: return 3'b110;\
+		9'b0_10000000: return 3'b111;\
+        endcase\
+    endfunction\
+\
+    logic [2:0] in, out;\
+    logic       clk;\
+\
+    assign out = encoder8to3(clk, decoder3to8(clk,in));\
+\
+    initial begin\
+        clk = 1'b1;\
+        in  = 3'b111;\
+        forever #5 clk = ~clk;\
+    end\
+\
+    always @ (posedge clk)\
+        in++;\
+\
+    initial\
+        #80 $finish();\
+\
+endmodule}
